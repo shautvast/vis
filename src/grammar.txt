@@ -1,0 +1,25 @@
+node: markup | styles
+markup: nodes
+elements: "{" element* "}"
+element: node | edge
+node: (id (":" title)? nodes?) | edgenode
+edge: idref arrow idref
+arrow: ArrowLeft | ArrowRight | DiamondArrowLeft | DiamondArrowRight
+ArrowLeft: "<--"
+ArrowRight: "-->"
+DiamondArrowLeft: "<>--"
+DiamondArrowRight: "--<>"
+id: text
+title: string
+string: """ text """
+
+
+styles: style*
+style: idref attributes? ":" style-elements
+style-elements: "{" style-element "}"
+style-element: key ":" value
+key: text
+value: text
+idref: text
+attributes: "(" attribute ")"
+attribute: text ("," attribute)*
