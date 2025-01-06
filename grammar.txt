@@ -1,4 +1,4 @@
-node: markup | styles
+vis: markup | styles
 markup: nodes
 elements: "{" element* "}"
 element: node | edge
