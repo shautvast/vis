@@ -1,4 +1,10 @@
-Just started
+# Vis
+
+![vis](vis-icon.jpg)
+
+_It is Dutch for fish_
+
+### NB I just started, needs a lot of work
 
 sample vis file:
 
