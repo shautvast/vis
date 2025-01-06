@@ -18,24 +18,3 @@ fn main() -> anyhow::Result<()> {
 fn read_file(file_name: &str) -> anyhow::Result<String> {
     fs::read_to_string(file_name).map_err(|e| anyhow!("Cannot read file '{}': {}", file_name, e))
 }
-
-//frankensteinwoorden:
-//loopbaanrecord
-//vriendendienstplicht
-//brandweerbericht
-//antiloopgraaf
-//blikveldslag
-//zeurpietenhuis
-//krentenbroodmager
-//opzijweg
-//doorstroomversnelling
-//koektrommelvlies
-//draaideuropening
-//luchtsteuntrekker
-//boekhoudhakker
-//krantenkopstoot
-//prijzenoorlogsverslaggeving
-//dwaallichtknop
-//slaapwandeltocht
-//rampspoedafdeling
-//
