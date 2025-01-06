@@ -1,9 +1,9 @@
 vis: markup | styles
-markup: nodes
+markup: "markup:" nodes
 elements: "{" element* "}"
 element: node | edge
 node: (id (":" title)? nodes?) | edgenode
-edge: idref arrow idref
+edge: from_id arrow to_id title?
 arrow: ArrowLeft | ArrowRight | DiamondArrowLeft | DiamondArrowRight
 ArrowLeft: "<--"
 ArrowRight: "-->"
@@ -14,7 +14,7 @@ title: string
 string: """ text """
 
 
-styles: style*
+styles: "styles"  "{" style* "}"
 style: idref attributes? ":" style-elements
 style-elements: "{" style-element "}"
 style-element: key ":" value

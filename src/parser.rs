@@ -9,7 +9,7 @@ use anyhow::anyhow;
 
 pub fn parse_vis(contents: &str) -> anyhow::Result<Vis> {
     let tokens = crate::scanner::scan(contents)?;
-    println!("{:?}", tokens);
+    // println!("{:?}", tokens);
     let mut parser = Parser::new(tokens);
 
     Ok(Vis {
@@ -30,26 +30,26 @@ impl Parser {
 
     fn markup(&mut self) -> anyhow::Result<Vec<Element>> {
         if self.match_token(Markup) {
-            self.nodes()
+            self.elements()
         } else {
             Ok(vec![])
         }
     }
 
-    fn nodes(&mut self) -> anyhow::Result<Vec<Element>> {
-        println!("nodes {:?}", self.peek());
+    fn elements(&mut self) -> anyhow::Result<Vec<Element>> {
+        // println!("nodes {:?}", self.peek());
         self.consume(LeftBrace, "Expected '{'")?;
         let mut nodes = vec![];
         while !self.match_token(RightBrace) {
-            nodes.push(self.node()?);
+            nodes.push(self.element()?);
         }
         Ok(nodes)
     }
 
-    fn node(&mut self) -> anyhow::Result<Element> {
-        println!("node {:?}", self.peek());
+    fn element(&mut self) -> anyhow::Result<Element> {
+        // println!("node {:?}", self.peek());
         let id = self.id()?;
-        println!("id {}", id);
+        // println!("id {}", id);
         let current = self.peek().clone();
         if self.match_tokens(vec![
             ArrowRight,
@@ -60,9 +60,9 @@ impl Parser {
             self.edge(id, current)
         } else {
             let title = self.title()?;
-            println!("title {:?}", title);
+            // println!("title {:?}", title);
             let children = if self.check(&LeftBrace) {
-                self.nodes()?
+                self.elements()?
             } else {
                 vec![]
             };
