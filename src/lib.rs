@@ -1,10 +1,8 @@
+pub mod parse;
+pub mod render;
+
+use parse::tokens::TokenType;
 use std::collections::HashMap;
-
-use tokens::TokenType;
-
-pub mod parser;
-mod scanner;
-mod tokens;
 
 #[derive(Debug)]
 pub struct Vis {

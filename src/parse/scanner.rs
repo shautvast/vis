@@ -1,6 +1,6 @@
 use unicode_segmentation::UnicodeSegmentation;
 
-use crate::tokens::{
+use crate::parse::tokens::{
     Token,
     TokenType::{self, *},
     KEYWORDS,

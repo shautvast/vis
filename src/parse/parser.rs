@@ -1,5 +1,5 @@
 use crate::{
-    tokens::{
+    parse::tokens::{
         Token,
         TokenType::{self, *},
     },
@@ -8,7 +8,7 @@ use crate::{
 use anyhow::anyhow;
 
 pub fn parse_vis(contents: &str) -> anyhow::Result<Vis> {
-    let tokens = crate::scanner::scan(contents)?;
+    let tokens = crate::parse::scanner::scan(contents)?;
     // println!("{:?}", tokens);
     let mut parser = Parser::new(tokens);
 

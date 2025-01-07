@@ -8,7 +8,7 @@ fn main() -> anyhow::Result<()> {
         return Err(anyhow!("Usage: vis vis-file"));
     } else {
         let vis_file = read_file(&args[1])?;
-        let vis = vis::parser::parse_vis(vis_file.as_str())?;
+        let vis = vis::parse::parse_vis(vis_file.as_str())?;
         println!("{:?}", vis);
     }
 
