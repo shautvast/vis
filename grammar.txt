@@ -1,5 +1,5 @@
-vis: markup | styles
-markup: "markup:" nodes
+vis: structure styles
+structure: "structure:" nodes
 elements: "{" element* "}"
 element: node | edge
 node: (id (":" title)? nodes?) | edgenode

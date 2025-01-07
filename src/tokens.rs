@@ -4,7 +4,7 @@ use TokenType::*;
 
 pub const KEYWORDS: LazyCell<HashMap<&str, TokenType>> = LazyCell::new(|| {
     let mut m = HashMap::new();
-    m.insert("markup", Markup);
+    m.insert("structure", Structure);
     m.insert("styles", Styles);
     m.insert("group", Group);
     m.insert("px", Px);
@@ -46,7 +46,7 @@ pub enum TokenType {
     Str,
     Number,
     Minus,
-    Markup,
+    Structure,
     Styles,
     Group,
     Eof,

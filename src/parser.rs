@@ -13,7 +13,7 @@ pub fn parse_vis(contents: &str) -> anyhow::Result<Vis> {
     let mut parser = Parser::new(tokens);
 
     Ok(Vis {
-        markup: parser.markup()?,
+        structure: parser.structure()?,
         styles: parser.styles()?,
     })
 }
@@ -28,8 +28,8 @@ impl Parser {
         Self { tokens, current: 0 }
     }
 
-    fn markup(&mut self) -> anyhow::Result<Vec<Element>> {
-        if self.match_token(Markup) {
+    fn structure(&mut self) -> anyhow::Result<Vec<Element>> {
+        if self.match_token(Structure) {
             self.elements()
         } else {
             Ok(vec![])

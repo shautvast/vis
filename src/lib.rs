@@ -8,7 +8,7 @@ mod tokens;
 
 #[derive(Debug)]
 pub struct Vis {
-    pub markup: Vec<Element>,
+    pub structure: Vec<Element>,
     pub styles: Vec<StyleNode>,
 }
 
