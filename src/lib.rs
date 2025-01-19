@@ -16,14 +16,28 @@ pub enum Element {
     Edge(String, String, TokenType, Option<String>),
 }
 
-#[derive(Debug)]
+impl Element {
+    pub fn new_node(id: &str, label: Option<&str>, children: Vec<Element>) -> Element {
+        Element::Node(id.into(), label.map(|s| s.into()), children)
+    }
+    pub fn new_edge(
+        id: String,
+        source: String,
+        token: TokenType,
+        label: Option<String>,
+    ) -> Element {
+        Element::Edge(id, source, token, label)
+    }
+}
+
+#[derive(Debug, Clone)]
 pub struct StyleNode {
     pub id_ref: String,
     pub containertype: ContainerType,
     pub attributes: HashMap<String, String>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum ContainerType {
     Node,
     Group,

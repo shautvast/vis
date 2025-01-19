@@ -21,10 +21,10 @@ structure {
       interest_engine: "InterestEngine"
     }
   }
-  bank-->calc
-  bank_scripts--<>bank_db
-  bank_motor--<>bank_db
-  interest_engine-->calc
+  bank==>calc
+  bank_scripts==<>bank_db
+  bank_motor==<>bank_db
+  interest_engine==>calc
 }
 
 styles {
@@ -32,25 +32,7 @@ styles {
     type: textnode
     orientation: horizontal
     shape: rectangle
-    font-family: arial
-    border-width: 1px
-    border-color: gray
   }
-  functions(group) {
-    background-color: yellow
-    font-family: arial
-    border-radius: 20px
-    border-width: 1px
-    border-color: gray
-  }
-  systems(group) {
-    background-color: lightblue
-  }
-  tag1: "⚭" { // how will this work?
-    right:0px
-    top:0px
-  }
-  tag2: {
-    itchy: scratchy
-  }
+  functions(group) {}
+  systems(group) {}
 }

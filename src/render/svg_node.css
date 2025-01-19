@@ -1,0 +1,14 @@
+svg {
+    background-color: white;
+}
+
+.node {
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1em;
+    font-size: 10px;
+    font-family: sans-serif;
+}

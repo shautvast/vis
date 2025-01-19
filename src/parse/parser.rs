@@ -3,13 +3,14 @@ use crate::{
         Token,
         TokenType::{self, *},
     },
-    Element, StyleNode, Vis,
+    ContainerType, Element, StyleNode, Vis,
 };
 use anyhow::anyhow;
+use std::collections::HashMap;
 
 pub fn parse_vis(contents: &str) -> anyhow::Result<Vis> {
     let tokens = crate::parse::scanner::scan(contents)?;
-    // println!("{:?}", tokens);
+    println!("{:?}", tokens);
     let mut parser = Parser::new(tokens);
 
     Ok(Vis {
@@ -103,7 +104,71 @@ impl Parser {
     }
 
     fn styles(&mut self) -> anyhow::Result<Vec<StyleNode>> {
-        Ok(vec![])
+        println!("styles");
+        if self.match_token(Styles) {
+            self.consume(LeftBrace, "Expected '{'")?;
+            let mut styles = vec![];
+            while !self.check(&RightBrace) {
+                styles.push(self.style()?);
+            }
+            self.consume(RightBrace, "Expected '}'")?;
+            Ok(styles)
+        } else {
+            Ok(vec![])
+        }
+    }
+
+    fn style(&mut self) -> anyhow::Result<StyleNode> {
+        println!("style");
+        if self.check(&Identifier) {
+            let idref = self.peek().lexeme.to_owned();
+            println!("id {}", idref);
+            self.advance();
+            let containertype = self.containertype()?;
+            self.consume(RightParen, "Expected ')'")?;
+            println!("containertype {:?}", containertype);
+            self.consume(LeftBrace, "Expected '{'")?;
+            let attributes = self.style_elements()?;
+            self.consume(RightBrace, "Expected '}'")?;
+
+            Ok(StyleNode {
+                id_ref: idref,
+                containertype,
+                attributes,
+            })
+        } else {
+            Err(anyhow!("Expected identifier"))?
+        }
+    }
+
+    fn style_elements(&mut self) -> anyhow::Result<HashMap<String, String>> {
+        println!("style_elements");
+        let mut elements = HashMap::new();
+        let mut key = self.peek().clone();
+        println!("key {:?}", key);
+        while key.tokentype != RightBrace {
+            self.advance();
+            self.consume(Colon, "Expected ':'")?;
+            let value = self.advance().clone();
+            println!("value {:?}", value);
+            elements.insert(key.lexeme.to_owned(), value.lexeme);
+            key = self.peek().clone();
+        }
+        Ok(elements)
+    }
+
+    fn containertype(&mut self) -> anyhow::Result<ContainerType> {
+        println!("containertype");
+        Ok(if self.check(&LeftParen) {
+            self.advance();
+            if self.match_token(Group) {
+                ContainerType::Group
+            } else {
+                ContainerType::Node
+            }
+        } else {
+            ContainerType::Node
+        })
     }
 
     fn consume(&mut self, tokentype: TokenType, expect: &str) -> anyhow::Result<&Token> {
@@ -111,7 +176,12 @@ impl Parser {
         if self.check(&tokentype) {
             Ok(self.advance())
         } else {
-            Err(anyhow!("Error: {} on line {}", expect, current.line))
+            Err(anyhow!(
+                "Error: {} but was '{}' on line {}",
+                expect,
+                self.peek().lexeme,
+                current.line
+            ))
         }
     }
 

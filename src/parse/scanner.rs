@@ -48,8 +48,8 @@ impl<'a> Scanner<'a> {
             "," => self.add_token(Comma),
             "." => self.add_token(Dot),
 
-            "-" => {
-                if self.match_token("-") {
+            "=" => {
+                if self.match_token("=") {
                     if self.match_token(">") {
                         self.add_token(ArrowRight);
                     } else if self.match_token("<") {
@@ -122,7 +122,7 @@ impl<'a> Scanner<'a> {
     }
 
     fn identifier(&mut self) {
-        while is_alpha(self.peek()) || is_digit(self.peek()) {
+        while is_alpha(self.peek()) || is_digit(self.peek()) || self.peek() == "-" {
             self.advance();
         }
         let text = self.chars[self.start_pos..self.current_pos].concat();
